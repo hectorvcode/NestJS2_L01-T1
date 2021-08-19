@@ -31,7 +31,7 @@ export class UserController {
         return response.status(HttpStatus.OK).send();
     }
     
-    @Post('insertUser')
+    @Post()
     public post(@Body() body: any, @Res() response: Response){
         try{
             const result = schema.validate(body);

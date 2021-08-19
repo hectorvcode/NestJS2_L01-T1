@@ -25,6 +25,11 @@ enum gender {
 
 @Controller('user')
 export class UserController {
+
+    @Get()
+    public async get(@Res() response: Response){
+        return response.status(HttpStatus.OK).send();
+    }
     
     @Post('insertUser')
     public post(@Body() body: any, @Res() response: Response){

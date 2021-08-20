@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserController } from './user/user.controller';
 import { NestjsKnexModule } from 'nestjs-knexjs';
-import { UserService } from './user/user.service';
 
 
 @Module({
@@ -18,6 +17,6 @@ import { UserService } from './user/user.service';
       },
   })],
   controllers: [AppController, UserController],
-  providers: [AppService, UserService],
+  providers: [AppService],
 })
 export class AppModule {}

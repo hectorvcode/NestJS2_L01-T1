@@ -34,12 +34,11 @@ export class UserController {
         this.knex = this.nestjsKnexService.getKnexConnection();
     }
 
-    // @Get()
-    // public async get(@Res() response: Response){
-    //     const tableData = await this.knex('user').select('*');
-    //     return response.status(HttpStatus.OK).send();
-    //     console.log(tableData);
-    // }
+    @Get()
+    public async get(@Res() response: Response){
+        const tableData = await this.knex('user').select('*');
+        return response.status(HttpStatus.OK).send({ tableData });
+    }
 
     
     @Post()

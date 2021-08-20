@@ -20,7 +20,7 @@ enum gender {
               .minOfNumeric(2)
               .min(8),
     gender: Joi.string().valid('male', 'female'),
-    birthDate: Joi.date().format('DD-MM-YYYY')
+    birthDate: Joi.date()
   })
 
 @Controller('user')

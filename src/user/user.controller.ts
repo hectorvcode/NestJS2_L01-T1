@@ -17,7 +17,7 @@ enum gender {
     password: JoiPassword.string()
               .minOfSpecialCharacters(1)
               .minOfLowercase(1)
-              .minOfNumeric(2)
+              .minOfNumeric(1)
               .min(8),
     gender: Joi.string().valid('male', 'female'),
     birthDate: Joi.date().format('DD-MM-YYYY')

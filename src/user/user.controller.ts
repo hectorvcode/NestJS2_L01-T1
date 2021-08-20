@@ -42,7 +42,7 @@ export class UserController {
 
     
     @Post()
-    public post(@Body() body: any, @Res() response: Response){
+    public async post(@Body() body: any, @Res() response: Response){
         try{
             const result = schema.validate(body);
             console.log('body', body);
@@ -53,12 +53,23 @@ export class UserController {
                 });
             }
 
-            const newUser = {
-                ...body,
-                id: uuidv4()
-            }
+            // const newUser = {
+            //     ...body,
+            //     id: uuidv4()
+            // }
 
-            return response.status(HttpStatus.CREATED).send({ newUser })
+            const id = uuidv4();
+            const data =  await this.knex('user').insert({
+                id,
+                name: body.name ,
+                lastName: body.lastName,
+                email:  body.email,
+                password: body.password,
+                gender: body.gender,
+                birthDate: body.birthDate
+            })
+
+            return response.status(HttpStatus.CREATED).send({ data })
 
         } catch(err) {
             return response

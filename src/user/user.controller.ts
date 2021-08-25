@@ -4,6 +4,7 @@ import { Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import Knex from 'knex';
 import { NestjsKnexService } from 'nestjs-knexjs';
+import * as bcrypt from 'bcrypt';
 
 enum gender {
     MALE = 'male',
@@ -53,28 +54,33 @@ export class UserController {
                 });
             }
 
-            // const newUser = {
-            //     ...body,
-            //     id: uuidv4()
-            // }
-
             const id = uuidv4();
-            const data =  await this.knex('user').insert({
+
+            const password = body.password;
+            const saltRounds = 10;
+            const salt = bcrypt.genSaltSync(saltRounds);
+            const hashedPassword = bcrypt.hashSync(password, salt);
+
+
+
+            const userData = {
                 id,
                 name: body.name ,
                 lastName: body.lastName,
                 email:  body.email,
-                password: body.password,
+                password: hashedPassword,
                 gender: body.gender,
                 birthDate: body.birthDate
-            })
+            };
 
-            return response.status(HttpStatus.CREATED).send({ data })
+            await this.knex('user').insert(userData);
+
+            return response.status(HttpStatus.CREATED).send({ userData })
 
         } catch(err) {
             return response
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .send({ error: 'Server error' })
+                    .send({ error: err.message })
         }
     }
 }

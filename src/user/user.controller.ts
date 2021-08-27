@@ -14,7 +14,7 @@ enum gender {
     FEMALE = 'female'
   }
 
-  const SUPER_SECRET_KEY = 'clave super secreta';
+  const SUPER_SECRET_KEY = 'nestJS';
   
   const Joi = require('joi').extend(require('@joi/date'));
 
@@ -166,3 +166,4 @@ export class UserController {
         }
     }
 }
+

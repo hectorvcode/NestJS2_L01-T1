@@ -1,0 +1,314 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample server User App Server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+    "version": "1.0.5",
+    "title": "Swagger UserApp",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+
+
+  "tags": [
+    {
+      "name": "user",
+      "description": "Everything about your Users"
+    },
+    {
+      "name": "login",
+      "description": "Everything about Log In"
+    }
+  ],
+
+
+  "basePath": "/",
+    "schemes": [
+      "https",
+      "http"
+    ],
+  
+  
+  "paths":{
+    "/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "creates an user ",
+        "description": "this end-point creates an user",
+        "operationId": "postUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authentication",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserPost"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/UserCreated"
+            }
+          },
+          "400": {
+            "description": "review data sent"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      },
+
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "get users",
+        "description": "",
+        "operationId": "getUsers",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "get all users objects",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserDto"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    },
+
+    "/login": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "summary": "login",
+        "description": "",
+        "operationId": "login",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "data to login",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserDto"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+
+
+
+  "securityDefinitions": {
+    "bearer": {
+    "type": "bearer",
+    "name": "bearer",
+    "in": "header"
+    }
+  },
+
+
+  "definitions": {
+    "UserPost": {
+      "type": "object",
+      "required": [
+        "name",
+        "lastName",
+        "email",
+        "password"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Jhon"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Doe"
+        },
+        "email": {
+          "type": "string",
+          "example": "jhondoe@email.com",
+          "description": "should be a valid email"
+        },
+        "password": {
+          "type": "string",
+          "example": "Abc1234&yuy",
+          "description": "should have an uppercase, lowercase, number, special charecter and min 8 lenght"
+        },
+        "gender": {
+          "type": "string",
+          "enum": [
+            "male",
+            "female"
+          ]
+        },
+        "birthDate": {
+          "type": "string",
+          "example": "2019-08-24T14:15:22Z",
+          "format": "date-time"
+        }
+      }
+    },
+
+    "UserCreated": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "uuid",
+          "example": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d"
+        },
+        "name": {
+          "type": "string",
+          "example": "Jhon"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Doe"
+        },
+        "email": {
+          "type": "string",
+          "example": "jhondoe@email.com"
+        },
+        "gender": {
+          "type": "string",
+          "enum": [
+            "male",
+            "female"
+          ]
+        },
+        "birthDate": {
+          "type": "string",
+          "example": "2019-08-24T14:15:22Z",
+          "format": "date-time"
+        },
+        "creationDate": {
+          "type": "string",
+          "example": "2019-08-24T14:15:22Z",
+          "format": "date-time"
+        },
+        "verifiedEmail": {
+          "type": "boolean",
+          "example": "false"
+        }
+      }
+    },
+
+    "UserLogin": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "person@email.com",
+          "description": "should be a valid email structure"
+        },
+        "password": {
+          "type": "string",
+          "example": "C0n3xi0n!!",
+          "description": "should have an uppercase, lowercase, number, special charecter and min 8 lenght"
+        }
+      }
+    },
+
+    "UserDto": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "example": "personName"
+        },
+        "last_name": {
+          "type": "lastName"
+        },
+        "email": {
+          "type": "string",
+          "example": "person@email.com"
+        },
+        "lastConnection": {
+          "type": "string",
+          "example": "Hola por primera vez"
+        },
+        "token": {
+          "type": "string",
+          "example": "logged token"
+        }
+      }
+    }
+  }
+}
+
+

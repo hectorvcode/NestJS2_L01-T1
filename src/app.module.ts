@@ -3,10 +3,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserController } from './user/user.controller';
 import { NestjsKnexModule } from 'nestjs-knexjs';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { AuthGuard } from './auth.guard';
 
 
 @Module({
-  imports: [NestjsKnexModule.register({
+  imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
+    NestjsKnexModule.register({
       client: 'mysql',
       connection: {
           host: 'remotemysql.com',
@@ -17,6 +24,6 @@ import { NestjsKnexModule } from 'nestjs-knexjs';
       },
   })],
   controllers: [AppController, UserController],
-  providers: [AppService],
+  providers: [AppService, AuthGuard],
 })
 export class AppModule {}

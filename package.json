@@ -35,7 +35,6 @@
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "nestjs-knexjs": "^1.0.1",
-    "redoc": "^2.0.0-rc.56",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",

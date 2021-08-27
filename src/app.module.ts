@@ -11,7 +11,7 @@ import { AuthGuard } from './auth.guard';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
+      rootPath: join(__dirname, '..', 'docs'),
     }),
     NestjsKnexModule.register({
       client: 'mysql',
